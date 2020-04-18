@@ -1,6 +1,8 @@
 #include "tilemap.h"
 
 #include <cmath>
+#include <fstream>
+#include <string>
 
 const int kTileRows = 16;
 const int kTileCols = 16;
@@ -113,8 +115,49 @@ std::vector<TileMapObject> extractObjects(std::vector<std::vector<Tile>>* map) {
   return objects;
 }
 
-std::unique_ptr<TileMap> TileMap::Load(
-    const std::vector<std::vector<int>>& tiledata, const TileSet* tileset) {
+std::vector<std::vector<int>> TilesFromCSV(const std::string& filename) {
+  std::ifstream map_file;
+  map_file.open(filename, std::ifstream::in);
+
+  std::vector<std::vector<int>> rows;
+
+  while (map_file.good()) {
+    std::string line;
+    std::getline(map_file, line);
+    int c0 = 0;
+    std::vector<Tile> row;
+    for (int i = 0; i < line.length(); ++i) {
+      if (line[i] == ',') {
+        std::string tile_str = line.substr(c0, i - c0);
+        int tile = std::stoi(tile_str);
+        row.push_back(tile);
+        c0 = i + 1; // skip the comma
+      }
+    }
+    if (row.size() == 0) {
+      // There were no tiles in this row, stop parsing.
+      break;
+    }
+    // Parse the last tile in the row (no comma at line end).
+    int tile = std::stoi(line.substr(c0));
+    row.push_back(tile);
+    rows.push_back(row);
+  }
+
+  // Tiled puts -1 on empty tiles by default.
+  for (int y = 0; y < rows.size(); ++y) {
+    for (int x = 0; x < rows[y].size(); ++x) {
+      if (rows[y][x] < 0) {
+        rows[y][x] = 0;
+      }
+    }
+  }
+
+  return rows;
+}
+
+std::unique_ptr<TileMap> TileMap::LoadLayersFromCSVs(
+  const std::string& filename, const TileSet* tileset) {
   auto map = std::make_unique<TileMap>();
 
   map->tileset = tileset;
@@ -123,17 +166,11 @@ std::unique_ptr<TileMap> TileMap::Load(
   SDL_assert(TileToTileType(kEmptyTile) == TileType::NONE);
 
   // Makes a copy.
-  map->map = tiledata;
-  // Tiled puts -1 on empty tiles by default.
-  for (int y = 0; y < map->map.size(); ++y) {
-    for (int x = 0; x < map->map[y].size(); ++x) {
-      if (map->map[y][x] < 0) {
-        map->map[y][x] = 0;
-      }
-    }
-  }
-
-  map->objects = extractObjects(&map->map);
+  map->back = TilesFromCSV(filename + "_back.csv");
+  map->front = TilesFromCSV(filename + "_front.csv");
+  map->collision = TilesFromCSV(filename + "_collision.csv");
+  std::vector<std::vector<Tile>> objects_layer = TilesFromCSV(filename + "_objects.csv");
+  map->objects = extractObjects(&objects_layer);
 
   return map;
 }
@@ -142,13 +179,13 @@ std::vector<TileMapObject> TileMap::TileMapObjects() const {
   return objects;
 }
 
-void TileMap::Draw(SDL_Renderer* renderer) const {
+void TileMap::DrawTiles(SDL_Renderer* renderer, const std::vector<std::vector<Tile>>& tiles) const {
   SDL_Rect dst;
   dst.w = kTileWidth;
   dst.h = kTileHeight;
 
-  for (int row = 0; row < map.size(); ++row) {
-    const std::vector<Tile>& tilerow = map[row];
+  for (int row = 0; row < tiles.size(); ++row) {
+    const std::vector<Tile>& tilerow = tiles[row];
     for (int col = 0; col < tilerow.size(); ++col) {
       dst.y = row * kTileHeight;
       dst.x = col * kTileWidth;
@@ -157,16 +194,24 @@ void TileMap::Draw(SDL_Renderer* renderer) const {
   }
 }
 
+void TileMap::DrawBackground(SDL_Renderer* renderer) const {
+  DrawTiles(renderer, back);
+}
+
+void TileMap::DrawForeground(SDL_Renderer* renderer) const {
+  DrawTiles(renderer, front);
+}
+
 TileType TileMap::AtPoint(const Vec& p) const {
   int tile_x = (int)p.x;
   int tile_y = (int)p.y;
-  if (tile_y < 0 || tile_y >= map.size()) {
+  if (tile_y < 0 || tile_y >= collision.size()) {
     return TileType::OOB;
   }
-  if (tile_x < 0 || tile_x >= map[tile_y].size()) {
+  if (tile_x < 0 || tile_x >= collision[tile_y].size()) {
     return TileType::OOB;
   }
-  return TileToTileType(map[tile_y][tile_x]);
+  return TileToTileType(collision[tile_y][tile_x]);
 }
 
 std::set<TileType> TileMap::CollidingWith(const Rect& rect) const {

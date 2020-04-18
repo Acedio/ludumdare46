@@ -61,7 +61,8 @@ struct CollisionInfo {
 class TileMap {
  public:
   // Draw the map, no viewport.
-  void Draw(SDL_Renderer* renderer) const;
+  void DrawBackground(SDL_Renderer* renderer) const;
+  void DrawForeground(SDL_Renderer* renderer) const;
 
   std::vector<TileMapObject> TileMapObjects() const;
 
@@ -72,11 +73,15 @@ class TileMap {
 
   TileType AtPoint(const Vec& p) const;
 
-  static std::unique_ptr<TileMap> Load(
-      const std::vector<std::vector<int>>& tiledata, const TileSet* tileset);
+  static std::unique_ptr<TileMap> LoadLayersFromCSVs(
+    const std::string& file_prefix, const TileSet* tileset);
 
  private:
-  std::vector<std::vector<Tile>> map;
+  void DrawTiles(SDL_Renderer* renderer, const std::vector<std::vector<Tile>>& tiles) const;
+
+  std::vector<std::vector<Tile>> front;
+  std::vector<std::vector<Tile>> back;
+  std::vector<std::vector<Tile>> collision;
   const TileSet* tileset;
   std::vector<TileMapObject> objects;
 };

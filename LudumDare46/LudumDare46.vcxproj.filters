@@ -81,4 +81,46 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="asset_dir\collision.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="asset_dir\overlay.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="asset_dir\tiles.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="asset_dir\collision.tsx">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="asset_dir\map0.tmx">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="asset_dir\map0_back.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="asset_dir\map0_collision.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="asset_dir\map0_front.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="asset_dir\map0_objects.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="asset_dir\tiles.tsx">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="asset_dir\hurt.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="asset_dir\jump.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+  </ItemGroup>
 </Project>

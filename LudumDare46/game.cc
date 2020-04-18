@@ -48,7 +48,7 @@ void drawBackground(SDL_Renderer* renderer) {
 
 void Game::Draw(SDL_Renderer* renderer) const {
   drawBackground(renderer);
-  tilemap->Draw(renderer);
+  tilemap->DrawBackground(renderer);
   if (level == 0) {
     SDL_RenderCopy(renderer, overlay_texture, NULL, NULL);
   }
@@ -58,13 +58,15 @@ void Game::Draw(SDL_Renderer* renderer) const {
   objects->Draw(renderer);
   hero->Draw(renderer);
   particles.Draw(renderer);
+
+  tilemap->DrawForeground(renderer);
 }
 
 std::vector<std::vector<std::vector<int>>> leveldata;
 
 void Game::LoadLevel(int level, const TileSet* tileset) {
-  SDL_assert(level >= 0 && level < leveldata.size());
-  tilemap = TileMap::Load(leveldata[level], tileset);
+  // SDL_assert(level >= 0 && level < leveldata.size());
+  tilemap = TileMap::LoadLayersFromCSVs("asset_dir/map0", tileset);
   boxes = std::make_unique<BoxManager>(tileset,
                                        /*TODO: detect number of columns*/ 100);
   objects = std::make_unique<ObjectManager>(tileset);
@@ -100,15 +102,11 @@ std::unique_ptr<Game> Game::Load(SDL_Renderer* renderer) {
   std::unique_ptr<Game> game(new Game());
 
   game->tileset_texture = IMG_LoadTexture(renderer, "asset_dir/tiles.png");
-  if (!game->tileset_texture) {
-    return nullptr;
-  }
+  SDL_assert(game->tileset_texture != nullptr);
   game->tileset = std::make_unique<TileSet>(game->tileset_texture);
 
   game->overlay_texture = IMG_LoadTexture(renderer, "asset_dir/overlay.png");
-  if (!game->overlay_texture) {
-    return nullptr;
-  }
+  SDL_assert(game->overlay_texture);
 
   game->level = 0;
   game->LoadLevel(game->level, game->tileset.get());
