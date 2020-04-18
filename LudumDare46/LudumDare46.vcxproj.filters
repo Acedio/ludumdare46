@@ -18,5 +18,67 @@
     <ClCompile Include="LudumDare46.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="box.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="buttons.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="geometry.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="hero.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="object.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="particle.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sprite.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tilemap.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="box.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="buttons.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="event.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="geometry.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="hero.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="log.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="object.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="particle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sprite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tilemap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

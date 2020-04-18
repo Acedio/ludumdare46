@@ -5,12 +5,12 @@
 #include "buttons.h"
 #include "game.h"
 
-SDL_Window* global_window;
-SDL_Renderer* global_renderer;
+SDL_Window *global_window;
+SDL_Renderer *global_renderer;
 
 std::unique_ptr<Game> game;
 
-const double kTimestep = 1.0 / 60.0;
+const double kTimestep = 1.0/60.0;
 
 bool gameLoop() {
   // Update game logic.
@@ -25,13 +25,13 @@ bool gameLoop() {
   return true;
 }
 
-int main(int argc, char** argv) {
+int main(int argc, char **argv) {
   if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) {
     return -1;
   }
 
   // TODO: Set up a context to remove the globals.
-  global_window = SDL_CreateWindow("Ludum Dare 46", 0, 0, 640, 480, 0);
+  global_window = SDL_CreateWindow("Lift Off!", 0, 0, 640, 480, 0);
   if (!global_window) {
     return -1;
   }

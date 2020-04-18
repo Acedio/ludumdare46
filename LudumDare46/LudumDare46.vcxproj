@@ -71,8 +71,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);C:\Dev\SDL2-2.0.12\include</IncludePath>
-    <LibraryPath>C:\Dev\SDL2-2.0.12\lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Dev\SDL2-2.0.12\include;C:\Dev\SDL2_image-2.0.5\include;C:\Dev\SDL2_mixer-2.0.4\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Dev\SDL2-2.0.12\lib\x86;C:\Dev\SDL2_mixer-2.0.4\lib\x86;C:\Dev\SDL2_image-2.0.5\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -91,11 +91,12 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -149,7 +150,29 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="box.cc" />
+    <ClCompile Include="buttons.cc" />
+    <ClCompile Include="game.cc" />
+    <ClCompile Include="geometry.cc" />
+    <ClCompile Include="hero.cc" />
     <ClCompile Include="LudumDare46.cpp" />
+    <ClCompile Include="object.cc" />
+    <ClCompile Include="particle.cc" />
+    <ClCompile Include="sprite.cc" />
+    <ClCompile Include="tilemap.cc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="box.h" />
+    <ClInclude Include="buttons.h" />
+    <ClInclude Include="event.h" />
+    <ClInclude Include="game.h" />
+    <ClInclude Include="geometry.h" />
+    <ClInclude Include="hero.h" />
+    <ClInclude Include="log.h" />
+    <ClInclude Include="object.h" />
+    <ClInclude Include="particle.h" />
+    <ClInclude Include="sprite.h" />
+    <ClInclude Include="tilemap.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
