@@ -94,7 +94,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
@@ -159,6 +159,7 @@
     <ClCompile Include="geometry.cc" />
     <ClCompile Include="hero.cc" />
     <ClCompile Include="main.cc" />
+    <ClCompile Include="monster.cc" />
     <ClCompile Include="object.cc" />
     <ClCompile Include="particle.cc" />
     <ClCompile Include="path.cc" />
@@ -176,6 +177,7 @@
     <ClInclude Include="geometry.h" />
     <ClInclude Include="hero.h" />
     <ClInclude Include="log.h" />
+    <ClInclude Include="monster.h" />
     <ClInclude Include="object.h" />
     <ClInclude Include="particle.h" />
     <ClInclude Include="path.h" />

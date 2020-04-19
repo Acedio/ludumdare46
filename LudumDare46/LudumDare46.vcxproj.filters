@@ -57,6 +57,9 @@
     <ClCompile Include="path.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="monster.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="box.h">
@@ -102,6 +105,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="path.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="monster.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

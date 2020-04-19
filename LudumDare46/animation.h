@@ -18,8 +18,8 @@ public:
   void Draw(SDL_Renderer* renderer, const Camera& camera, const SDL_Rect& dst) const;
   void DrawAngle(SDL_Renderer* renderer, const Camera& camera, const SDL_Rect& dst,
                  double rads) const;
-  int width() { return w; }
-  int height() { return h; }
+  int width() const { return w; }
+  int height() const { return h; }
 private:
   Animation() {}
 

@@ -9,7 +9,7 @@
 #include "camera.h"
 #include "geometry.h"
 #include "hero.h"
-#include "path.h"
+#include "monster.h"
 #include "object.h"
 #include "particle.h"
 #include "tilemap.h"
@@ -46,7 +46,7 @@ class Game {
 
   // These are reloaded with each level load.
   std::unique_ptr<TileMap> tilemap;
-  std::unique_ptr<Path> path;
+  std::unique_ptr<Monster> monster;
   std::unique_ptr<Hero> hero;
   std::unique_ptr<BoxManager> boxes;
   std::unique_ptr<ObjectManager> objects;

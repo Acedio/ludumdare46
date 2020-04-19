@@ -42,10 +42,9 @@ bool Game::Update(SDL_Renderer *renderer, ButtonState buttons, double t) {
     }
   }
   particles.Update(t);
-  path->Update(t);
+  monster->Update(t);
   SDL_Rect hero_box = ToSDLRect(hero->BoundingBox());
-  Vec pl = path->Location();
-  camera->Focus(pl.x, pl.y);
+  camera->Focus(hero_box.x, hero_box.y);
   camera->Update(t);
 
   return true;
@@ -67,6 +66,7 @@ void Game::Draw(SDL_Renderer* renderer) const {
   objects->Draw(renderer, *camera);
   hero->Draw(renderer, *camera);
   particles.Draw(renderer, *camera);
+  monster->Draw(renderer, *camera);
 
   tilemap->DrawForeground(renderer, *camera);
 }
@@ -92,7 +92,8 @@ void Game::LoadLevel(SDL_Renderer *renderer, int level, const TileSet* tileset) 
     }
   }
 
-  path = std::make_unique<Path>(Path::LoadFromCSV("asset_dir/map0_path.csv"));
+  monster = std::make_unique<Monster>(Path::LoadFromCSV("asset_dir/map0_path.csv"),
+                                      Animation::LoadFromCSV(renderer, "asset_dir/ghosty_left.anim"));
 
   SDL_Rect view;
   view.x = 0;
