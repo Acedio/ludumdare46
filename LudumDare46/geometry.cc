@@ -4,6 +4,31 @@ std::ostream& operator<<(std::ostream& o, const Rect& a) {
   return o << "x: " << a.x << " y: " << a.y << " w: " << a.w << " h: " << a.h;
 }
 
+double Length(Vec a) {
+  return sqrt(a.x * a.x + a.y * a.y);
+}
+
+Vec operator-(const Vec& a, const Vec& b) {
+  Vec result;
+  result.x = a.x - b.x;
+  result.y = a.y - b.y;
+  return result;
+}
+
+Vec operator+(const Vec& a, const Vec& b) {
+  Vec result;
+  result.x = a.x + b.x;
+  result.y = a.y + b.y;
+  return result;
+}
+
+Vec operator*(double s, const Vec& a) {
+  Vec result;
+  result.x = a.x * s;
+  result.y = a.y * s;
+  return result;
+}
+
 bool Intersects(double a1, double a2, double b1, double b2) {
   // NOTE: Collisions are open on the top end, closed on the bottom. [0, 1) does
   // not collide with [1, 2). This way unit squares can be stacked without

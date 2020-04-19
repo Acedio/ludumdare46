@@ -1,6 +1,7 @@
 #ifndef GEOMETRY_H
 #define GEOMETRY_H
 
+#include <cmath>
 #include <iostream>
 
 struct Rect {
@@ -16,6 +17,11 @@ struct Vec {
   double x;
   double y;
 };
+
+double Length(Vec a);
+Vec operator-(const Vec& a, const Vec& b);
+Vec operator+(const Vec& a, const Vec& b);
+Vec operator*(double s, const Vec& a);
 
 bool Intersects(Rect a, Rect b);
 // Two segments on a line.

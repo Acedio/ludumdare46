@@ -161,6 +161,7 @@
     <ClCompile Include="main.cc" />
     <ClCompile Include="object.cc" />
     <ClCompile Include="particle.cc" />
+    <ClCompile Include="path.cc" />
     <ClCompile Include="sprite.cc" />
     <ClCompile Include="tilemap.cc" />
   </ItemGroup>
@@ -177,6 +178,7 @@
     <ClInclude Include="log.h" />
     <ClInclude Include="object.h" />
     <ClInclude Include="particle.h" />
+    <ClInclude Include="path.h" />
     <ClInclude Include="sprite.h" />
     <ClInclude Include="tilemap.h" />
   </ItemGroup>
@@ -195,6 +197,7 @@
     <None Include="asset_dir\map0_collision.csv" />
     <None Include="asset_dir\map0_front.csv" />
     <None Include="asset_dir\map0_objects.csv" />
+    <None Include="asset_dir\map0_path.csv" />
     <None Include="asset_dir\test.anim" />
     <None Include="asset_dir\tiles.tsx" />
   </ItemGroup>

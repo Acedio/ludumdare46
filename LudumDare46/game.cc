@@ -42,8 +42,10 @@ bool Game::Update(SDL_Renderer *renderer, ButtonState buttons, double t) {
     }
   }
   particles.Update(t);
+  path->Update(t);
   SDL_Rect hero_box = ToSDLRect(hero->BoundingBox());
-  camera->Focus(hero_box.x, hero_box.y);
+  Vec pl = path->Location();
+  camera->Focus(pl.x, pl.y);
   camera->Update(t);
 
   return true;
@@ -89,6 +91,8 @@ void Game::LoadLevel(SDL_Renderer *renderer, int level, const TileSet* tileset) 
       objects->AddTileMapObject(obj.type, pos);
     }
   }
+
+  path = std::make_unique<Path>(Path::LoadFromCSV("asset_dir/map0_path.csv"));
 
   SDL_Rect view;
   view.x = 0;

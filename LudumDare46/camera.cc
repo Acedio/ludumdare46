@@ -8,6 +8,7 @@ void Camera::Update(double t) {
 
   camera.x = fx;
   camera.y = fy;
+  return;
 
   if (camera.x < bounds.x) {
     camera.x = bounds.x;
