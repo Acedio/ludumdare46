@@ -15,7 +15,8 @@ class Game {
  public:
   ~Game();
 
-  void Update(double t, ButtonState buttons);
+  // Returns false if the game has ended.
+  bool Update(double t, ButtonState buttons);
   void Draw(SDL_Renderer* renderer) const;
 
   static std::unique_ptr<Game> Load(SDL_Renderer* renderer);

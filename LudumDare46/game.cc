@@ -5,7 +5,11 @@
 // #include "leveldata.h"
 #include "log.h"
 
-void Game::Update(double t, ButtonState buttons) {
+bool Game::Update(double t, ButtonState buttons) {
+  if (buttons.exit) {
+    return false;
+  }
+
   std::vector<Event> events = hero->Update(t, buttons, *tilemap, boxes.get());
   boxes->Update(t, *tilemap);
   auto o_events = objects->Update(t, hero->BoundingBox());
@@ -39,6 +43,8 @@ void Game::Update(double t, ButtonState buttons) {
     }
   }
   particles.Update(t);
+
+  return true;
 }
 
 void drawBackground(SDL_Renderer* renderer) {

@@ -155,7 +155,7 @@
     <ClCompile Include="game.cc" />
     <ClCompile Include="geometry.cc" />
     <ClCompile Include="hero.cc" />
-    <ClCompile Include="LudumDare46.cpp" />
+    <ClCompile Include="main.cc" />
     <ClCompile Include="object.cc" />
     <ClCompile Include="particle.cc" />
     <ClCompile Include="sprite.cc" />
