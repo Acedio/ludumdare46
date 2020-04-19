@@ -45,6 +45,12 @@
     <ClCompile Include="main.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="animation.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="csvread.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="box.h">
@@ -80,6 +86,12 @@
     <ClInclude Include="tilemap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="animation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="csvread.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="asset_dir\collision.png">
@@ -112,6 +124,9 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="asset_dir\tiles.tsx">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="asset_dir\test.anim">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

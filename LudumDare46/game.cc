@@ -2,7 +2,6 @@
 
 #include <SDL_image.h>
 
-// #include "leveldata.h"
 #include "log.h"
 
 bool Game::Update(double t, ButtonState buttons) {
@@ -43,6 +42,7 @@ bool Game::Update(double t, ButtonState buttons) {
     }
   }
   particles.Update(t);
+  anim->Update();
 
   return true;
 }
@@ -64,6 +64,7 @@ void Game::Draw(SDL_Renderer* renderer) const {
   objects->Draw(renderer);
   hero->Draw(renderer);
   particles.Draw(renderer);
+  anim->Draw(renderer, ToSDLRect(hero->BoundingBox()));
 
   tilemap->DrawForeground(renderer);
 }
@@ -116,6 +117,8 @@ std::unique_ptr<Game> Game::Load(SDL_Renderer* renderer) {
 
   game->level = 0;
   game->LoadLevel(game->level, game->tileset.get());
+
+  game->anim = Animation::LoadFromCSV(renderer, "asset_dir/test.anim");
 
   return game;
 }

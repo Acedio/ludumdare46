@@ -150,8 +150,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="animation.cc" />
     <ClCompile Include="box.cc" />
     <ClCompile Include="buttons.cc" />
+    <ClCompile Include="csvread.cc" />
     <ClCompile Include="game.cc" />
     <ClCompile Include="geometry.cc" />
     <ClCompile Include="hero.cc" />
@@ -162,8 +164,10 @@
     <ClCompile Include="tilemap.cc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="animation.h" />
     <ClInclude Include="box.h" />
     <ClInclude Include="buttons.h" />
+    <ClInclude Include="csvread.h" />
     <ClInclude Include="event.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="geometry.h" />
@@ -186,6 +190,7 @@
     <None Include="asset_dir\map0_collision.csv" />
     <None Include="asset_dir\map0_front.csv" />
     <None Include="asset_dir\map0_objects.csv" />
+    <None Include="asset_dir\test.anim" />
     <None Include="asset_dir\tiles.tsx" />
   </ItemGroup>
   <ItemGroup>

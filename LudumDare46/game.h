@@ -3,6 +3,7 @@
 
 #include <SDL_mixer.h>
 
+#include "animation.h"
 #include "box.h"
 #include "buttons.h"
 #include "geometry.h"
@@ -46,6 +47,7 @@ class Game {
   std::unique_ptr<Hero> hero;
   std::unique_ptr<BoxManager> boxes;
   std::unique_ptr<ObjectManager> objects;
+  std::unique_ptr<Animation> anim;
 };
 
 #endif
