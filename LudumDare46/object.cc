@@ -17,11 +17,11 @@ std::vector<Event> ObjectManager::Update(double t, const Rect& hero_box) {
   return events;
 }
 
-void ObjectManager::Draw(SDL_Renderer* renderer) const {
+void ObjectManager::Draw(SDL_Renderer* renderer, const Camera& camera) const {
   for (const Object& object : objects) {
     SDL_Rect dst = ToSDLRect(object.bounding_box);
     if (object.sprite) {
-      object.sprite->Draw(renderer, dst);
+      object.sprite->Draw(renderer, camera, dst);
     }
   }
 }

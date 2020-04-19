@@ -36,17 +36,19 @@ SDL_Rect TileSet::getTile(Tile tile) const {
   return src;
 }
 
-void TileSet::DrawTile(SDL_Renderer* renderer, Tile tile,
+void TileSet::DrawTile(SDL_Renderer* renderer, const Camera& camera, Tile tile,
                        const SDL_Rect& dst) const {
   SDL_Rect src = getTile(tile);
-  SDL_RenderCopy(renderer, tex, &src, &dst);
+  SDL_Rect transformed = camera.Transform(dst);
+  SDL_RenderCopy(renderer, tex, &src, &transformed);
 }
 
-void TileSet::DrawTileAngle(SDL_Renderer* renderer, Tile tile,
+void TileSet::DrawTileAngle(SDL_Renderer* renderer, const Camera& camera, Tile tile,
                             const SDL_Rect& dst, double rads) const {
   SDL_Rect src = getTile(tile);
+  SDL_Rect transformed = camera.Transform(dst);
   double degrees = rads * (-180 / 3.14159);
-  SDL_RenderCopyEx(renderer, tex, &src, &dst, degrees, NULL, SDL_FLIP_NONE);
+  SDL_RenderCopyEx(renderer, tex, &src, &transformed, degrees, NULL, SDL_FLIP_NONE);
 }
 
 const char* ToString(TileType type) {
@@ -179,7 +181,7 @@ std::vector<TileMapObject> TileMap::TileMapObjects() const {
   return objects;
 }
 
-void TileMap::DrawTiles(SDL_Renderer* renderer, const std::vector<std::vector<Tile>>& tiles) const {
+void TileMap::DrawTiles(SDL_Renderer* renderer, const Camera& camera, const std::vector<std::vector<Tile>>& tiles) const {
   SDL_Rect dst;
   dst.w = kTileWidth;
   dst.h = kTileHeight;
@@ -189,17 +191,17 @@ void TileMap::DrawTiles(SDL_Renderer* renderer, const std::vector<std::vector<Ti
     for (int col = 0; col < tilerow.size(); ++col) {
       dst.y = row * kTileHeight;
       dst.x = col * kTileWidth;
-      tileset->DrawTile(renderer, tilerow[col], dst);
+      tileset->DrawTile(renderer, camera, tilerow[col], dst);
     }
   }
 }
 
-void TileMap::DrawBackground(SDL_Renderer* renderer) const {
-  DrawTiles(renderer, back);
+void TileMap::DrawBackground(SDL_Renderer* renderer, const Camera& camera) const {
+  DrawTiles(renderer, camera, back);
 }
 
-void TileMap::DrawForeground(SDL_Renderer* renderer) const {
-  DrawTiles(renderer, front);
+void TileMap::DrawForeground(SDL_Renderer* renderer, const Camera& camera) const {
+  DrawTiles(renderer, camera, front);
 }
 
 TileType TileMap::AtPoint(const Vec& p) const {
@@ -293,4 +295,14 @@ CollisionInfo TileMap::YCollide(const Rect& rect, double dy) const {
     }
   }
   return ci;
+}
+
+SDL_Rect TileMap::Bounds() {
+  SDL_assert(back.size() > 0);
+  SDL_Rect bounds;
+  bounds.x = 0;
+  bounds.y = 0;
+  bounds.w = back[0].size() * kTileHeight;
+  bounds.h = back.size() * kTileWidth;
+  return bounds;
 }

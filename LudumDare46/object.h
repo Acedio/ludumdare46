@@ -28,7 +28,7 @@ class ObjectManager {
   void AddTileMapObject(TileMapObjectType type, Vec pos);
 
   std::vector<Event> Update(double t, const Rect& hero_box);
-  void Draw(SDL_Renderer* renderer) const;
+  void Draw(SDL_Renderer* renderer, const Camera& camera) const;
 
  private:
   std::vector<Object> objects;

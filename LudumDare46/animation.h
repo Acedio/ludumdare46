@@ -7,15 +7,19 @@
 #include <memory>
 #include <vector>
 
+#include "camera.h"
+
 class Animation {
 public:
   static std::unique_ptr<Animation> LoadFromCSV(SDL_Renderer* renderer, const std::string& filename);
 
   void Update();
 
-  void Draw(SDL_Renderer* renderer, const SDL_Rect& dst) const;
-  void DrawAngle(SDL_Renderer* renderer, const SDL_Rect& dst,
+  void Draw(SDL_Renderer* renderer, const Camera& camera, const SDL_Rect& dst) const;
+  void DrawAngle(SDL_Renderer* renderer, const Camera& camera, const SDL_Rect& dst,
                  double rads) const;
+  int width() { return w; }
+  int height() { return h; }
 private:
   Animation() {}
 
@@ -27,14 +31,14 @@ private:
     int row;
   };
 
-  SDL_Texture *tex;
+  SDL_Texture *tex = nullptr;
 
   std::vector<Frame> frames;
   int frame = 0;
   int ticks = 0;
 
-  int width;
-  int height;
+  int w = 0;
+  int h = 0;
 };
 
 #endif  // ANIMATION_H

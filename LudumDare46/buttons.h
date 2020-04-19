@@ -4,6 +4,8 @@
 struct ButtonState {
   bool left;
   bool right;
+  bool up;
+  bool down;
   bool jump;
   bool grab;
   bool restart;

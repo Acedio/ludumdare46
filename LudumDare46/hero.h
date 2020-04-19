@@ -5,9 +5,10 @@
 
 #include "box.h"
 #include "buttons.h"
+#include "camera.h"
 #include "event.h"
 #include "geometry.h"
-#include "sprite.h"
+#include "animation.h"
 #include "tilemap.h"
 
 enum class JumpState {
@@ -28,18 +29,18 @@ class Hero {
  public:
   std::vector<Event> Update(double t, ButtonState buttons,
                             const TileMap& tilemap, BoxManager* boxes);
-  void Draw(SDL_Renderer* renderer) const;
+  void Draw(SDL_Renderer* renderer, const Camera& camera) const;
 
   Rect BoundingBox() const {
     return bounding_box;
   }
-  const Sprite& CurrentSprite() const;
+  const Animation& CurrentSprite() const;
 
-  Hero(const TileSet* tileset, Vec pos)
+  Hero(SDL_Renderer* renderer, Vec pos)
       : bounding_box{pos.x, pos.y, 0.8, 0.9},
         vel{0, 0},
-        left(tileset, 4),
-        right(tileset, 5) {};
+        left(Animation::LoadFromCSV(renderer, "asset_dir/ghosty_left.anim")),
+        right(Animation::LoadFromCSV(renderer, "asset_dir/ghosty_right.anim")) {};
 
  private:
   void UpdateGrab(ButtonState buttons, const TileMap& tilemap,
@@ -50,8 +51,8 @@ class Hero {
   // Tiles/sec
   Vec vel;
 
-  Sprite left;
-  Sprite right;
+  std::unique_ptr<Animation> left;
+  std::unique_ptr<Animation> right;
 
   bool facing_right = true;
   JumpState jump_state = JumpState::RECOVERING;

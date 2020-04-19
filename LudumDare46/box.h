@@ -3,6 +3,7 @@
 
 #include <optional>
 
+#include "camera.h"
 #include "geometry.h"
 #include "tilemap.h"
 #include "sprite.h"
@@ -35,7 +36,7 @@ class BoxManager {
   void Add(Vec pos);
   bool TryAdd(const TileMap& tilemap, Vec upper_left, GrabbedBox box);
   void Update(double t, const TileMap& tilemap);
-  void Draw(SDL_Renderer* renderer) const;
+  void Draw(SDL_Renderer* renderer, const Camera& camera) const;
 
   std::optional<GrabbedBox> GrabAt(Vec pos);
 

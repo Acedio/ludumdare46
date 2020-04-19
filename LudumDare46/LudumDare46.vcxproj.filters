@@ -51,6 +51,9 @@
     <ClCompile Include="csvread.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="camera.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="box.h">
@@ -92,6 +95,9 @@
     <ClInclude Include="csvread.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="asset_dir\collision.png">
@@ -101,6 +107,9 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="asset_dir\tiles.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="asset_dir\ghosty.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
@@ -127,6 +136,12 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="asset_dir\test.anim">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="asset_dir\ghosty_left.anim">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="asset_dir\ghosty_right.anim">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

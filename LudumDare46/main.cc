@@ -32,6 +32,7 @@ int main(int argc, char** argv) {
     return -1;
   }
   SDL_RenderSetScale(global_renderer, 2, 2);
+  SDL_RenderSetIntegerScale(global_renderer, SDL_TRUE);
 
   game = Game::Load(global_renderer);
   SDL_assert(game != nullptr);
@@ -41,7 +42,7 @@ int main(int argc, char** argv) {
   while (true) {
     // Update game logic.
     ButtonState buttons = GetButtonState();
-    if (!game->Update(kTimestep, buttons)) {
+    if (!game->Update(global_renderer, buttons, kTimestep)) {
       return 0;
     }
 

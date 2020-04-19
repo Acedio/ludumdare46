@@ -21,7 +21,7 @@ class ParticleManager {
 
   void Add(const Particle& particle);
   void Update(double t);
-  void Draw(SDL_Renderer* renderer) const;
+  void Draw(SDL_Renderer* renderer, const Camera& camera) const;
 
  private:
   // Once a particle exits this box, it is destroyed.

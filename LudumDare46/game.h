@@ -6,6 +6,7 @@
 #include "animation.h"
 #include "box.h"
 #include "buttons.h"
+#include "camera.h"
 #include "geometry.h"
 #include "hero.h"
 #include "object.h"
@@ -17,14 +18,14 @@ class Game {
   ~Game();
 
   // Returns false if the game has ended.
-  bool Update(double t, ButtonState buttons);
+  bool Update(SDL_Renderer* renderer, ButtonState buttons, double t);
   void Draw(SDL_Renderer* renderer) const;
 
   static std::unique_ptr<Game> Load(SDL_Renderer* renderer);
  private:
   Game() : particles(Rect{-10, -10, 100, 100}) {}
 
-  void LoadLevel(int level, const TileSet* tileset);
+  void LoadLevel(SDL_Renderer *renderer, int level, const TileSet* tileset);
 
   std::unique_ptr<TileSet> tileset;
   // Owned.
@@ -47,7 +48,7 @@ class Game {
   std::unique_ptr<Hero> hero;
   std::unique_ptr<BoxManager> boxes;
   std::unique_ptr<ObjectManager> objects;
-  std::unique_ptr<Animation> anim;
+  std::unique_ptr<Camera> camera;
 };
 
 #endif

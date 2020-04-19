@@ -4,7 +4,7 @@
 
 #include "log.h"
 
-bool Game::Update(double t, ButtonState buttons) {
+bool Game::Update(SDL_Renderer *renderer, ButtonState buttons, double t) {
   if (buttons.exit) {
     return false;
   }
@@ -16,7 +16,7 @@ bool Game::Update(double t, ButtonState buttons) {
   for (const Event& event : events) {
     if (event.type == EventType::WIN) {
       ++level;
-      LoadLevel(level, tileset.get());
+      LoadLevel(renderer, level, tileset.get());
       std::cout << "YOU WIN!!!" << std::endl;
     } else if (event.type == EventType::DIE) {
       InitializeSound();
@@ -25,13 +25,13 @@ bool Game::Update(double t, ButtonState buttons) {
       }
       particles.Add(Particle{
           .rect = hero->BoundingBox(),
-          .sprite = hero->CurrentSprite(),
+          .sprite = Sprite(tileset.get(), 4),
           .vel = {5.0, -10.0},
           .angle = 0,
           .rot_vel = 4,
           .remove = false,
       });
-      LoadLevel(level, tileset.get());
+      LoadLevel(renderer, level, tileset.get());
       std::cout << "YOU DIE!!!" << std::endl;
     } else if (event.type == EventType::JUMP) {
       // TODO: Move this or make it happen on first sound.
@@ -42,7 +42,9 @@ bool Game::Update(double t, ButtonState buttons) {
     }
   }
   particles.Update(t);
-  anim->Update();
+  SDL_Rect hero_box = ToSDLRect(hero->BoundingBox());
+  camera->Focus(hero_box.x, hero_box.y);
+  camera->Update(t);
 
   return true;
 }
@@ -54,24 +56,22 @@ void drawBackground(SDL_Renderer* renderer) {
 
 void Game::Draw(SDL_Renderer* renderer) const {
   drawBackground(renderer);
-  tilemap->DrawBackground(renderer);
+  tilemap->DrawBackground(renderer, *camera);
   if (level == 0) {
     SDL_RenderCopy(renderer, overlay_texture, NULL, NULL);
   }
 
-  boxes->Draw(renderer);
-  // TODO: Maybe have some objects in front and some behind?
-  objects->Draw(renderer);
-  hero->Draw(renderer);
-  particles.Draw(renderer);
-  anim->Draw(renderer, ToSDLRect(hero->BoundingBox()));
+  boxes->Draw(renderer, *camera);
+  objects->Draw(renderer, *camera);
+  hero->Draw(renderer, *camera);
+  particles.Draw(renderer, *camera);
 
-  tilemap->DrawForeground(renderer);
+  tilemap->DrawForeground(renderer, *camera);
 }
 
 std::vector<std::vector<std::vector<int>>> leveldata;
 
-void Game::LoadLevel(int level, const TileSet* tileset) {
+void Game::LoadLevel(SDL_Renderer *renderer, int level, const TileSet* tileset) {
   // SDL_assert(level >= 0 && level < leveldata.size());
   tilemap = TileMap::LoadLayersFromCSVs("asset_dir/map0", tileset);
   boxes = std::make_unique<BoxManager>(tileset,
@@ -81,7 +81,7 @@ void Game::LoadLevel(int level, const TileSet* tileset) {
   for (const TileMapObject& obj : tilemap->TileMapObjects()) {
     if (obj.type == TileMapObjectType::START) {
       Vec pos{obj.location.x, obj.location.y};
-      hero = std::make_unique<Hero>(tileset, pos);
+      hero = std::make_unique<Hero>(renderer, pos);
     } else if (obj.type == TileMapObjectType::BOX) {
       boxes->Add(Vec{obj.location.x, obj.location.y});
     } else {
@@ -89,6 +89,16 @@ void Game::LoadLevel(int level, const TileSet* tileset) {
       objects->AddTileMapObject(obj.type, pos);
     }
   }
+
+  SDL_Rect view;
+  view.x = 0;
+  view.y = 0;
+  SDL_GetRendererOutputSize(renderer, &view.w, &view.h);
+  float scale_x = 0, scale_y = 0;
+  SDL_RenderGetScale(renderer, &scale_x, &scale_y);
+  view.w /= scale_x;
+  view.h /= scale_y;
+  camera = std::make_unique<Camera>(view, tilemap->Bounds());
 }
 
 void Game::InitializeSound() {
@@ -116,9 +126,7 @@ std::unique_ptr<Game> Game::Load(SDL_Renderer* renderer) {
   SDL_assert(game->overlay_texture);
 
   game->level = 0;
-  game->LoadLevel(game->level, game->tileset.get());
-
-  game->anim = Animation::LoadFromCSV(renderer, "asset_dir/test.anim");
+  game->LoadLevel(renderer, game->level, game->tileset.get());
 
   return game;
 }

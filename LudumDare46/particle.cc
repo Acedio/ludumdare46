@@ -21,8 +21,8 @@ void ParticleManager::Update(double t) {
   }
 }
 
-void ParticleManager::Draw(SDL_Renderer* renderer) const {
+void ParticleManager::Draw(SDL_Renderer* renderer, const Camera& camera) const {
   for (const Particle& p : particles) {
-    p.sprite.DrawAngle(renderer, ToSDLRect(p.rect), p.angle);
+    p.sprite.DrawAngle(renderer, camera, ToSDLRect(p.rect), p.angle);
   }
 }

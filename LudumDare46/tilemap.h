@@ -7,6 +7,7 @@
 
 #include <SDL.h>
 
+#include "camera.h"
 #include "geometry.h"
 
 SDL_Rect ToSDLRect(const Rect& rect);
@@ -16,9 +17,9 @@ typedef int Tile;
 class TileSet {
  public:
   TileSet(SDL_Texture* tex) : tex(tex) {}
-  void DrawTile(SDL_Renderer* renderer, Tile tile,
+  void DrawTile(SDL_Renderer* renderer, const Camera& camera, Tile tile,
                 const SDL_Rect& dst) const;
-  void DrawTileAngle(SDL_Renderer* renderer, Tile tile, const SDL_Rect& dst,
+  void DrawTileAngle(SDL_Renderer* renderer, const Camera& camera, Tile tile, const SDL_Rect& dst,
                      double rads) const;
 
  private:
@@ -61,8 +62,8 @@ struct CollisionInfo {
 class TileMap {
  public:
   // Draw the map, no viewport.
-  void DrawBackground(SDL_Renderer* renderer) const;
-  void DrawForeground(SDL_Renderer* renderer) const;
+  void DrawBackground(SDL_Renderer* renderer, const Camera& camera) const;
+  void DrawForeground(SDL_Renderer* renderer, const Camera& camera) const;
 
   std::vector<TileMapObject> TileMapObjects() const;
 
@@ -73,11 +74,13 @@ class TileMap {
 
   TileType AtPoint(const Vec& p) const;
 
+  SDL_Rect Bounds();
+
   static std::unique_ptr<TileMap> LoadLayersFromCSVs(
     const std::string& file_prefix, const TileSet* tileset);
 
  private:
-  void DrawTiles(SDL_Renderer* renderer, const std::vector<std::vector<Tile>>& tiles) const;
+  void DrawTiles(SDL_Renderer* renderer, const Camera& camera, const std::vector<std::vector<Tile>>& tiles) const;
 
   std::vector<std::vector<Tile>> front;
   std::vector<std::vector<Tile>> back;

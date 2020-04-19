@@ -76,11 +76,11 @@ void BoxManager::Update(double t, const TileMap& tilemap) {
   }
 }
 
-void BoxManager::Draw(SDL_Renderer* renderer) const {
+void BoxManager::Draw(SDL_Renderer* renderer, const Camera& camera) const {
   for (int col = 0; col < columns.size(); ++col) {
     for (const Box& box : columns[col]) {
       SDL_Rect dst = ToSDLRect(ToBoundingBox(col, box));
-      sprite.Draw(renderer, dst);
+      sprite.Draw(renderer, camera, dst);
     }
   }
 }

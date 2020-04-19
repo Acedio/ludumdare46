@@ -156,27 +156,30 @@ std::vector<Event> Hero::Update(double t, ButtonState buttons,
 
   UpdateGrab(buttons, tilemap, boxes);
 
+  left->Update();
+  right->Update();
+
   return events;
 }
 
-const Sprite& Hero::CurrentSprite() const {
+const Animation& Hero::CurrentSprite() const {
   if (facing_right) {
-    return right;
+    return *right;
   } else {
-    return left;
+    return *left;
   }
 }
 
-void Hero::Draw(SDL_Renderer* renderer) const {
+void Hero::Draw(SDL_Renderer* renderer, const Camera& camera) const {
   // The sprite is a unit square that should be bottom aligned and horizontally
   // centered around the bounding_box.
   Rect sprite_box{bounding_box.x - (1 - bounding_box.w) / 2,
                   bounding_box.y - (1 - bounding_box.h), 1, 1};
   SDL_Rect dst = ToSDLRect(sprite_box);
-  CurrentSprite().Draw(renderer, dst);
+  CurrentSprite().Draw(renderer, camera, dst);
   if (holding) {
     Vec upper_left = HeldUpperLeft();
     Rect box_sprite_box{upper_left.x, upper_left.y, 1, 1};
-    holding->sprite.Draw(renderer, ToSDLRect(box_sprite_box));
+    holding->sprite.Draw(renderer, camera, ToSDLRect(box_sprite_box));
   }
 }

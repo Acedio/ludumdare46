@@ -153,6 +153,7 @@
     <ClCompile Include="animation.cc" />
     <ClCompile Include="box.cc" />
     <ClCompile Include="buttons.cc" />
+    <ClCompile Include="camera.cc" />
     <ClCompile Include="csvread.cc" />
     <ClCompile Include="game.cc" />
     <ClCompile Include="geometry.cc" />
@@ -167,6 +168,7 @@
     <ClInclude Include="animation.h" />
     <ClInclude Include="box.h" />
     <ClInclude Include="buttons.h" />
+    <ClInclude Include="camera.h" />
     <ClInclude Include="csvread.h" />
     <ClInclude Include="event.h" />
     <ClInclude Include="game.h" />
@@ -180,11 +182,14 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="asset_dir\collision.png" />
+    <Image Include="asset_dir\ghosty.png" />
     <Image Include="asset_dir\overlay.png" />
     <Image Include="asset_dir\tiles.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="asset_dir\collision.tsx" />
+    <None Include="asset_dir\ghosty_left.anim" />
+    <None Include="asset_dir\ghosty_right.anim" />
     <None Include="asset_dir\map0.tmx" />
     <None Include="asset_dir\map0_back.csv" />
     <None Include="asset_dir\map0_collision.csv" />
