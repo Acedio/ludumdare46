@@ -3,7 +3,7 @@
 
 #include <SDL.h>
 #include <string>
-#include <optional>
+#include <memory>
 #include <vector>
 
 #include "geometry.h"
@@ -12,10 +12,9 @@
 
 struct Level {
   Vec start;
-  std::vector<Path> paths;
-  std::vector<Monster> monsters;
+  std::vector<std::unique_ptr<Monster>> monsters;
 };
 
-std::optional<Level> LoadLevelFromCSV(SDL_Renderer* renderer, const std::string& filename);
+std::unique_ptr<Level> LoadLevelFromCSV(SDL_Renderer* renderer, const std::string& filename);
 
 #endif // LEVEL_H

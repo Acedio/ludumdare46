@@ -13,7 +13,7 @@ bool Game::Update(SDL_Renderer *renderer, ButtonState buttons, double t) {
   std::vector<Event> events = hero->Update(t, buttons, *tilemap);
   particles.Update(t);
   for (auto& monster : monsters) {
-    monster.Update(t);
+    monster->Update(t);
   }
   SDL_Rect hero_box = ToSDLRect(hero->BoundingBox());
   camera->Focus(hero_box.x, hero_box.y);
@@ -34,8 +34,8 @@ void Game::Draw(SDL_Renderer* renderer) const {
     // SDL_RenderCopy(renderer, overlay_texture, NULL, NULL);
   }
 
-  for (auto& monster : monsters) {
-    monster.Draw(renderer, *camera);
+  for (const auto& monster : monsters) {
+    monster->Draw(renderer, *camera);
   }
   hero->Draw(renderer, *camera);
   particles.Draw(renderer, *camera);
@@ -47,17 +47,17 @@ std::vector<std::vector<std::vector<int>>> leveldata;
 
 void Game::LoadLevel(SDL_Renderer *renderer, int level, const TileSet* tileset) {
   // SDL_assert(level >= 0 && level < leveldata.size());
-  auto maybe_level = LoadLevelFromCSV(renderer, "asset_dir/level.csv");
-  SDL_assert(maybe_level);
+  std::unique_ptr<Level> level_data = LoadLevelFromCSV(renderer, "asset_dir/level.csv");
+  SDL_assert(level_data);
 
-  maybe_level->start.x /= 8.0;
-  maybe_level->start.y /= 8.0;
+  level_data->start.x /= 8.0;
+  level_data->start.y /= 8.0;
 
-  hero = std::make_unique<Hero>(renderer, maybe_level->start);
+  hero = std::make_unique<Hero>(renderer, level_data->start);
 
   tilemap = TileMap::LoadLayersFromCSVs("asset_dir/test", tileset);
 
-  monsters = std::move(maybe_level->monsters);
+  monsters = std::move(level_data->monsters);
 
   SDL_Rect view;
   view.x = 0;

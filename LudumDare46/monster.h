@@ -9,13 +9,16 @@
 
 class Monster {
 public:
-  Monster(const Path& path, std::unique_ptr<Animation> animation) : path(path), animation(std::move(animation)) {}
+  static std::unique_ptr<Monster> LoadFromCSV(
+    SDL_Renderer *renderer, const Path& p, const std::string& filename);
   void Update(double t);
   void Draw(SDL_Renderer* renderer, const Camera& camera) const;
 
 private:
+  const Animation& current_animation() const;
+
   Path path;
-  std::unique_ptr<Animation> animation;
+  std::unique_ptr<Animation> left, right, up, down;
 };
 
 #endif // MONSTER_H

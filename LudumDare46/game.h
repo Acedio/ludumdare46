@@ -46,7 +46,7 @@ class Game {
   std::unique_ptr<TileMap> tilemap;
   std::unique_ptr<Hero> hero;
   std::unique_ptr<Camera> camera;
-  std::vector<Monster> monsters;
+  std::vector<std::unique_ptr<Monster>> monsters;
 };
 
 #endif

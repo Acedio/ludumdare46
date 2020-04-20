@@ -23,32 +23,44 @@ void Path::Reset() {
 }
 
 void Path::LoadSegment(int seg) {
-  if (seg + 1 < points.size()) {
-    segment = seg;
+  segment = seg;
+  if (!Done()) {
     segment_t = 0;
     seg_vec = points[seg + 1] - points[seg];
     double l = Length(seg_vec);
     segment_total_t = l / speed;
-  } else {
-    // Pause at the end of the last segment.
-    segment = points.size() - 1;
-    seg_vec = { 0, 0 };
   }
+}
+
+bool Path::Done() const {
+  return segment + 1 >= points.size();
 }
 
 bool Path::Update(double t) {
+  if (Done()) {
+    return true;
+  }
   segment_t += t;
   while (segment_t > segment_total_t) {
     double remainder = segment_t - segment_total_t;
-    if (segment + 1 >= points.size()) {
-      return true;
-    }
     LoadSegment(segment + 1);
     segment_t = remainder;
   }
-  return false;
+  return Done();
 }
 
 Vec Path::Location() const {
-  return points[segment] + (segment_t / segment_total_t) * seg_vec;
+  if (Done()) {
+    return points[points.size() - 1];
+  } else {
+    return points[segment] + (segment_t / segment_total_t) * seg_vec;
+  }
+}
+
+Vec Path::Direction() const {
+  if (Done()) {
+    return { 0,1 };
+  } else {
+    return (1 / Length(seg_vec)) * seg_vec;
+  }
 }

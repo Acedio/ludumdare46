@@ -17,7 +17,9 @@ public:
 
   // TODO: Probably don't want to use this directly since it will look robotic.
   // Add some sort of modulation. Or have monsters loosely follow this as a carrot.
+  bool Done() const;
   Vec Location() const;
+  Vec Direction() const;
 
 private:
   void LoadSegment(int seg);
