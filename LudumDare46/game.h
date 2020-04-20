@@ -44,9 +44,9 @@ class Game {
 
   // These are reloaded with each level load.
   std::unique_ptr<TileMap> tilemap;
-  std::unique_ptr<Monster> monster;
   std::unique_ptr<Hero> hero;
   std::unique_ptr<Camera> camera;
+  std::vector<Monster> monsters;
 };
 
 #endif

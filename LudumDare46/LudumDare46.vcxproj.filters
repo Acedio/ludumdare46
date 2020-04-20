@@ -135,9 +135,6 @@
     <None Include="asset_dir\ghosty_right.anim">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="asset_dir\map0_path.csv">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="asset_dir\level.csv">
       <Filter>Resource Files</Filter>
     </None>

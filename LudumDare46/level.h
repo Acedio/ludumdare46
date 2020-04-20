@@ -1,16 +1,21 @@
 #ifndef LEVEL_H
 #define LEVEL_H
 
+#include <SDL.h>
 #include <string>
 #include <optional>
+#include <vector>
 
 #include "geometry.h"
+#include "path.h"
+#include "monster.h"
 
 struct Level {
   Vec start;
-  // Paths, monster waves, etc.
+  std::vector<Path> paths;
+  std::vector<Monster> monsters;
 };
 
-std::optional<Level> LoadLevelFromCSV(const std::string& filename);
+std::optional<Level> LoadLevelFromCSV(SDL_Renderer* renderer, const std::string& filename);
 
 #endif // LEVEL_H

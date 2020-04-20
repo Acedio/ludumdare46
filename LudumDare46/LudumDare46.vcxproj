@@ -195,7 +195,6 @@
     <None Include="asset_dir\ghosty_right.anim" />
     <None Include="asset_dir\ghosty_up.anim" />
     <None Include="asset_dir\level.csv" />
-    <None Include="asset_dir\map0_path.csv" />
     <None Include="asset_dir\test.anim" />
     <None Include="asset_dir\test.tmx" />
     <None Include="asset_dir\test_back.csv" />

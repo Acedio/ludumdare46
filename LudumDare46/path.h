@@ -5,10 +5,11 @@
 #include <vector>
 
 #include "geometry.h"
+#include "csvread.h"
 
 class Path {
 public:
-  static Path LoadFromCSV(const std::string& filename);
+  static Path LoadFromCSV(CSVRead* reader);
 
   void Reset();
   // Returns true if the end has been reached.

@@ -4,9 +4,7 @@
 
 #include "csvread.h"
 
-Path Path::LoadFromCSV(const std::string& filename) {
-  std::unique_ptr<CSVRead> reader = CSVRead::OpenCSV(filename);
-
+Path Path::LoadFromCSV(CSVRead* reader) {
   Path path;
   int segments = reader->ReadInt();
   for (int i = 0; i < segments; ++i) {
