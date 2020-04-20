@@ -25,19 +25,24 @@ void Path::Reset() {
 }
 
 void Path::LoadSegment(int seg) {
-  SDL_assert(seg + 1 < points.size());
-  segment = seg;
-  segment_t = 0;
-  seg_vec = points[seg + 1] - points[seg];
-  double l = Length(seg_vec);
-  segment_total_t = l / speed;
+  if (seg + 1 < points.size()) {
+    segment = seg;
+    segment_t = 0;
+    seg_vec = points[seg + 1] - points[seg];
+    double l = Length(seg_vec);
+    segment_total_t = l / speed;
+  } else {
+    // Pause at the end of the last segment.
+    segment = points.size() - 1;
+    seg_vec = { 0, 0 };
+  }
 }
 
 bool Path::Update(double t) {
   segment_t += t;
   while (segment_t > segment_total_t) {
     double remainder = segment_t - segment_total_t;
-    if (segment + 2 >= points.size()) {
+    if (segment + 1 >= points.size()) {
       return true;
     }
     LoadSegment(segment + 1);
