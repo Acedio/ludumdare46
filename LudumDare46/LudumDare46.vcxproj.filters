@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="box.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="buttons.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -28,9 +25,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="hero.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="object.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="particle.cc">
@@ -60,11 +54,11 @@
     <ClCompile Include="monster.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="level.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="box.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="buttons.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -81,9 +75,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="log.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="object.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="particle.h">
@@ -110,6 +101,9 @@
     <ClInclude Include="monster.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="level.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="asset_dir\collision.png">
@@ -129,21 +123,6 @@
     <None Include="asset_dir\collision.tsx">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="asset_dir\map0.tmx">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="asset_dir\map0_back.csv">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="asset_dir\map0_collision.csv">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="asset_dir\map0_front.csv">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="asset_dir\map0_objects.csv">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="asset_dir\tiles.tsx">
       <Filter>Resource Files</Filter>
     </None>
@@ -157,6 +136,27 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="asset_dir\map0_path.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="asset_dir\level.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="asset_dir\test.tmx">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="asset_dir\test_back.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="asset_dir\test_collision.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="asset_dir\test_front.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="asset_dir\ghosty_down.anim">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="asset_dir\ghosty_up.anim">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

@@ -2,6 +2,7 @@
 
 #include <SDL_image.h>
 
+#include "level.h"
 #include "log.h"
 
 bool Game::Update(SDL_Renderer *renderer, ButtonState buttons, double t) {
@@ -9,38 +10,7 @@ bool Game::Update(SDL_Renderer *renderer, ButtonState buttons, double t) {
     return false;
   }
 
-  std::vector<Event> events = hero->Update(t, buttons, *tilemap, boxes.get());
-  boxes->Update(t, *tilemap);
-  auto o_events = objects->Update(t, hero->BoundingBox());
-  events.insert(events.end(), o_events.begin(), o_events.end());
-  for (const Event& event : events) {
-    if (event.type == EventType::WIN) {
-      ++level;
-      LoadLevel(renderer, level, tileset.get());
-      std::cout << "YOU WIN!!!" << std::endl;
-    } else if (event.type == EventType::DIE) {
-      InitializeSound();
-      if (!audio_error && hurt_sound) {
-        Mix_PlayChannel(-1, hurt_sound, 0);
-      }
-      particles.Add(Particle{
-          .rect = hero->BoundingBox(),
-          .sprite = Sprite(tileset.get(), 4),
-          .vel = {5.0, -10.0},
-          .angle = 0,
-          .rot_vel = 4,
-          .remove = false,
-      });
-      LoadLevel(renderer, level, tileset.get());
-      std::cout << "YOU DIE!!!" << std::endl;
-    } else if (event.type == EventType::JUMP) {
-      // TODO: Move this or make it happen on first sound.
-      InitializeSound();
-      if (!audio_error && jump_sound) {
-        Mix_PlayChannel(-1, jump_sound, 0);
-      }
-    }
-  }
+  std::vector<Event> events = hero->Update(t, buttons, *tilemap);
   particles.Update(t);
   monster->Update(t);
   SDL_Rect hero_box = ToSDLRect(hero->BoundingBox());
@@ -59,11 +29,9 @@ void Game::Draw(SDL_Renderer* renderer) const {
   drawBackground(renderer);
   tilemap->DrawBackground(renderer, *camera);
   if (level == 0) {
-    SDL_RenderCopy(renderer, overlay_texture, NULL, NULL);
+    // SDL_RenderCopy(renderer, overlay_texture, NULL, NULL);
   }
 
-  boxes->Draw(renderer, *camera);
-  objects->Draw(renderer, *camera);
   hero->Draw(renderer, *camera);
   particles.Draw(renderer, *camera);
   monster->Draw(renderer, *camera);
@@ -75,22 +43,15 @@ std::vector<std::vector<std::vector<int>>> leveldata;
 
 void Game::LoadLevel(SDL_Renderer *renderer, int level, const TileSet* tileset) {
   // SDL_assert(level >= 0 && level < leveldata.size());
-  tilemap = TileMap::LoadLayersFromCSVs("asset_dir/map0", tileset);
-  boxes = std::make_unique<BoxManager>(tileset,
-                                       /*TODO: detect number of columns*/ 100);
-  objects = std::make_unique<ObjectManager>(tileset);
+  auto maybe_level = LoadLevelFromCSV("asset_dir/level.csv");
+  SDL_assert(maybe_level);
 
-  for (const TileMapObject& obj : tilemap->TileMapObjects()) {
-    if (obj.type == TileMapObjectType::START) {
-      Vec pos{obj.location.x, obj.location.y};
-      hero = std::make_unique<Hero>(renderer, pos);
-    } else if (obj.type == TileMapObjectType::BOX) {
-      boxes->Add(Vec{obj.location.x, obj.location.y});
-    } else {
-      Vec pos{obj.location.x, obj.location.y};
-      objects->AddTileMapObject(obj.type, pos);
-    }
-  }
+  maybe_level->start.x /= 8.0;
+  maybe_level->start.y /= 8.0;
+
+  hero = std::make_unique<Hero>(renderer, maybe_level->start);
+
+  tilemap = TileMap::LoadLayersFromCSVs("asset_dir/test", tileset);
 
   monster = std::make_unique<Monster>(Path::LoadFromCSV("asset_dir/map0_path.csv"),
                                       Animation::LoadFromCSV(renderer, "asset_dir/ghosty_left.anim"));

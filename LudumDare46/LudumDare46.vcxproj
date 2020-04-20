@@ -151,16 +151,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="animation.cc" />
-    <ClCompile Include="box.cc" />
     <ClCompile Include="buttons.cc" />
     <ClCompile Include="camera.cc" />
     <ClCompile Include="csvread.cc" />
     <ClCompile Include="game.cc" />
     <ClCompile Include="geometry.cc" />
     <ClCompile Include="hero.cc" />
+    <ClCompile Include="level.cc" />
     <ClCompile Include="main.cc" />
     <ClCompile Include="monster.cc" />
-    <ClCompile Include="object.cc" />
     <ClCompile Include="particle.cc" />
     <ClCompile Include="path.cc" />
     <ClCompile Include="sprite.cc" />
@@ -168,7 +167,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="animation.h" />
-    <ClInclude Include="box.h" />
     <ClInclude Include="buttons.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="csvread.h" />
@@ -176,9 +174,9 @@
     <ClInclude Include="game.h" />
     <ClInclude Include="geometry.h" />
     <ClInclude Include="hero.h" />
+    <ClInclude Include="level.h" />
     <ClInclude Include="log.h" />
     <ClInclude Include="monster.h" />
-    <ClInclude Include="object.h" />
     <ClInclude Include="particle.h" />
     <ClInclude Include="path.h" />
     <ClInclude Include="sprite.h" />
@@ -192,15 +190,17 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="asset_dir\collision.tsx" />
+    <None Include="asset_dir\ghosty_down.anim" />
     <None Include="asset_dir\ghosty_left.anim" />
     <None Include="asset_dir\ghosty_right.anim" />
-    <None Include="asset_dir\map0.tmx" />
-    <None Include="asset_dir\map0_back.csv" />
-    <None Include="asset_dir\map0_collision.csv" />
-    <None Include="asset_dir\map0_front.csv" />
-    <None Include="asset_dir\map0_objects.csv" />
+    <None Include="asset_dir\ghosty_up.anim" />
+    <None Include="asset_dir\level.csv" />
     <None Include="asset_dir\map0_path.csv" />
     <None Include="asset_dir\test.anim" />
+    <None Include="asset_dir\test.tmx" />
+    <None Include="asset_dir\test_back.csv" />
+    <None Include="asset_dir\test_collision.csv" />
+    <None Include="asset_dir\test_front.csv" />
     <None Include="asset_dir\tiles.tsx" />
   </ItemGroup>
   <ItemGroup>

@@ -4,10 +4,10 @@
 #include <fstream>
 #include <string>
 
-const int kTileRows = 16;
-const int kTileCols = 16;
-const int kTileWidth = 16;
-const int kTileHeight = 16;
+const int kTileRows = 32;
+const int kTileCols = 32;
+const int kTileWidth = 8;
+const int kTileHeight = 8;
 const Tile kEmptyTile = 0;
 
 const double kBuffer = 0.001;
@@ -54,8 +54,7 @@ void TileSet::DrawTileAngle(SDL_Renderer* renderer, const Camera& camera, Tile t
 const char* ToString(TileType type) {
   switch (type) {
     case TileType::NONE: return "NONE";
-    case TileType::GROUND: return "GROUND";
-    case TileType::SPIKES: return "SPIKES";
+    case TileType::BLOCKED: return "BLOCKED";
     case TileType::OOB: return "OOB";
   }
   SDL_assert(false);
@@ -63,58 +62,11 @@ const char* ToString(TileType type) {
 
 TileType TileToTileType(Tile tile) {
   switch(tile) {
-    case 0x01:
-    case 0x11:
-      return TileType::GROUND;
-    case 2:
-      return TileType::SPIKES;
+    case 1:
+      return TileType::BLOCKED;
     default:
       return TileType::NONE;
   }
-}
-
-TileMapObjectType TileToTileMapObjectType(Tile tile) {
-  switch(tile) {
-    case 3:
-      return TileMapObjectType::BOX;
-    case 4:
-      return TileMapObjectType::START;
-    case 6:
-      return TileMapObjectType::EXIT;
-    default:
-      return TileMapObjectType::NONE;
-  }
-}
-
-std::vector<TileMapObject> extractObjects(std::vector<std::vector<Tile>>* map) {
-  SDL_assert(map != nullptr);
-
-  std::vector<TileMapObject> objects;
-
-  Rect location;
-  location.w = 1;
-  location.h = 1;
-
-  for (int row = 0; row < map->size(); ++row) {
-    std::vector<Tile>& tilerow = (*map)[row];
-    for (int col = 0; col < tilerow.size(); ++col) {
-      TileMapObjectType type = TileToTileMapObjectType(tilerow[col]);
-      if (type != TileMapObjectType::NONE) {
-        // Clear the tile so it shows up empty.
-        tilerow[col] = kEmptyTile;
-
-        location.y = row;
-        location.x = col;
-
-        TileMapObject object;
-        object.type = type;
-        object.location = location;
-        objects.push_back(object);
-      }
-    }
-  }
-
-  return objects;
 }
 
 std::vector<std::vector<int>> TilesFromCSV(const std::string& filename) {
@@ -146,15 +98,6 @@ std::vector<std::vector<int>> TilesFromCSV(const std::string& filename) {
     rows.push_back(row);
   }
 
-  // Tiled puts -1 on empty tiles by default.
-  for (int y = 0; y < rows.size(); ++y) {
-    for (int x = 0; x < rows[y].size(); ++x) {
-      if (rows[y][x] < 0) {
-        rows[y][x] = 0;
-      }
-    }
-  }
-
   return rows;
 }
 
@@ -171,14 +114,8 @@ std::unique_ptr<TileMap> TileMap::LoadLayersFromCSVs(
   map->back = TilesFromCSV(filename + "_back.csv");
   map->front = TilesFromCSV(filename + "_front.csv");
   map->collision = TilesFromCSV(filename + "_collision.csv");
-  std::vector<std::vector<Tile>> objects_layer = TilesFromCSV(filename + "_objects.csv");
-  map->objects = extractObjects(&objects_layer);
 
   return map;
-}
-
-std::vector<TileMapObject> TileMap::TileMapObjects() const {
-  return objects;
 }
 
 void TileMap::DrawTiles(SDL_Renderer* renderer, const Camera& camera, const std::vector<std::vector<Tile>>& tiles) const {
@@ -191,7 +128,9 @@ void TileMap::DrawTiles(SDL_Renderer* renderer, const Camera& camera, const std:
     for (int col = 0; col < tilerow.size(); ++col) {
       dst.y = row * kTileHeight;
       dst.x = col * kTileWidth;
-      tileset->DrawTile(renderer, camera, tilerow[col], dst);
+      if (tilerow[col] >= 0) {
+        tileset->DrawTile(renderer, camera, tilerow[col], dst);
+      }
     }
   }
 }

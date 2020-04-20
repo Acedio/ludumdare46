@@ -23,33 +23,19 @@ class TileSet {
                      double rads) const;
 
  private:
+  // Assumes 32x32 tilemap.
   SDL_Rect getTile(Tile tile) const;
-  // Assumes 16x16 tilemap.
   SDL_Texture* tex;
 };
 
 enum class TileType {
   NONE,
-  GROUND,
-  SPIKES,
+  BLOCKED,
   OOB
 };
 
 const char* ToString(TileType type);
 TileType TileToTileType(Tile tile);
-
-enum class TileMapObjectType {
-  NONE,
-  BOX,
-  START,
-  EXIT
-};
-
-struct TileMapObject {
-  TileMapObjectType type;
-  // The coordinates and size of the object in tilespace.
-  Rect location;
-};
 
 struct CollisionInfo {
   std::set<TileType> types;
@@ -64,8 +50,6 @@ class TileMap {
   // Draw the map, no viewport.
   void DrawBackground(SDL_Renderer* renderer, const Camera& camera) const;
   void DrawForeground(SDL_Renderer* renderer, const Camera& camera) const;
-
-  std::vector<TileMapObject> TileMapObjects() const;
 
   std::set<TileType> CollidingWith(const Rect& rect) const;
   // TODO: Maybe pass a set of TileType to indicate what the rect cares about?
@@ -86,7 +70,6 @@ class TileMap {
   std::vector<std::vector<Tile>> back;
   std::vector<std::vector<Tile>> collision;
   const TileSet* tileset;
-  std::vector<TileMapObject> objects;
 };
 
 #endif

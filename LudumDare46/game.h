@@ -4,13 +4,11 @@
 #include <SDL_mixer.h>
 
 #include "animation.h"
-#include "box.h"
 #include "buttons.h"
 #include "camera.h"
 #include "geometry.h"
 #include "hero.h"
 #include "monster.h"
-#include "object.h"
 #include "particle.h"
 #include "tilemap.h"
 
@@ -48,8 +46,6 @@ class Game {
   std::unique_ptr<TileMap> tilemap;
   std::unique_ptr<Monster> monster;
   std::unique_ptr<Hero> hero;
-  std::unique_ptr<BoxManager> boxes;
-  std::unique_ptr<ObjectManager> objects;
   std::unique_ptr<Camera> camera;
 };
 
