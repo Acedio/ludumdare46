@@ -12,6 +12,10 @@ const Tile kEmptyTile = 0;
 
 const double kBuffer = 0.001;
 
+Vec ToPixelSpace(const Vec& pos) {
+  return {pos.x * kTileWidth, pos.y * kTileHeight};
+}
+
 SDL_Rect ToSDLRect(const Rect& rect) {
   SDL_Rect sr;
   sr.x = rect.x * kTileWidth;

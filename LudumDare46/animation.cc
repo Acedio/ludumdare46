@@ -25,15 +25,19 @@ std::unique_ptr<Animation> Animation::LoadFromCSV(SDL_Renderer* renderer, const 
   return animation;
 }
 
-void Animation::Update() {
+bool Animation::Update() {
   ++ticks;
   if (ticks >= frames[frame].ticks) {
-    ticks = 0;
-    ++frame;
-    if (frame >= frames.size()) {
+    if (frame + 1 < frames.size()) {
+      ++frame;
+      ticks = 0;
+    } else if (loop) {
       frame = 0;
+    } else {
+      return false;
     }
   }
+  return true;
 }
 
 SDL_Rect Animation::getFrame(int row, int col) const {
@@ -62,3 +66,8 @@ void Animation::DrawAngle(SDL_Renderer* renderer, const Camera& camera, const SD
   with_src_bounds.h = src.h;
   SDL_RenderCopyEx(renderer, tex, &src, &with_src_bounds, degrees, NULL, SDL_FLIP_NONE);
 }
+
+void Animation::SetLoop(bool l) {
+  loop = l;
+}
+

@@ -13,11 +13,15 @@ class Animation {
 public:
   static std::unique_ptr<Animation> LoadFromCSV(SDL_Renderer* renderer, const std::string& filename);
 
-  void Update();
+  // Returns false if the animation has finished.
+  bool Update();
 
   void Draw(SDL_Renderer* renderer, const Camera& camera, const SDL_Rect& dst) const;
   void DrawAngle(SDL_Renderer* renderer, const Camera& camera, const SDL_Rect& dst,
                  double rads) const;
+
+  void SetLoop(bool l);
+
   int width() const { return w; }
   int height() const { return h; }
 private:
@@ -36,6 +40,7 @@ private:
   std::vector<Frame> frames;
   int frame = 0;
   int ticks = 0;
+  bool loop = true;
 
   int w = 0;
   int h = 0;

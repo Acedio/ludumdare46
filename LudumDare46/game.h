@@ -5,6 +5,7 @@
 
 #include "animation.h"
 #include "buttons.h"
+#include "tower.h"
 #include "camera.h"
 #include "geometry.h"
 #include "hero.h"
@@ -30,7 +31,6 @@ class Game {
   // Owned.
   SDL_Texture* tileset_texture;
   SDL_Texture* overlay_texture;
-  Mix_Chunk* jump_sound;
   Mix_Chunk* hurt_sound;
 
   void InitializeSound();
@@ -47,6 +47,7 @@ class Game {
   std::unique_ptr<Hero> hero;
   std::unique_ptr<Camera> camera;
   std::vector<std::unique_ptr<Monster>> monsters;
+  std::vector<std::unique_ptr<Tower>> towers;
 };
 
 #endif

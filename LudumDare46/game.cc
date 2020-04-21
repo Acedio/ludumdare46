@@ -15,6 +15,9 @@ bool Game::Update(SDL_Renderer *renderer, ButtonState buttons, double t) {
   for (auto& monster : monsters) {
     monster->Update(t);
   }
+  for (auto& tower : towers) {
+    tower->Update();
+  }
   SDL_Rect hero_box = ToSDLRect(hero->BoundingBox());
   camera->Focus(hero_box.x, hero_box.y);
   camera->Update(t);
@@ -37,6 +40,9 @@ void Game::Draw(SDL_Renderer* renderer) const {
   for (const auto& monster : monsters) {
     monster->Draw(renderer, *camera);
   }
+  for (const auto& tower : towers) {
+    tower->Draw(renderer, *camera);
+  }
   hero->Draw(renderer, *camera);
   particles.Draw(renderer, *camera);
 
@@ -54,10 +60,11 @@ void Game::LoadLevel(SDL_Renderer *renderer, int level, const TileSet* tileset) 
   level_data->start.y /= 8.0;
 
   hero = std::make_unique<Hero>(renderer, level_data->start);
-
   tilemap = TileMap::LoadLayersFromCSVs("asset_dir/test", tileset);
-
   monsters = std::move(level_data->monsters);
+  towers.push_back(std::make_unique<Tower>(
+      Vec{6, 6}, Animation::LoadFromCSV(renderer, "asset_dir/ghosty_left.anim"),
+      Animation::LoadFromCSV(renderer, "asset_dir/ghosty_right.anim")));
 
   SDL_Rect view;
   view.x = 0;
@@ -78,7 +85,6 @@ void Game::InitializeSound() {
     audio_initialized = true;
 
     if (!audio_error) {
-      jump_sound = Mix_LoadWAV("asset_dir/jump.wav");
       hurt_sound = Mix_LoadWAV("asset_dir/hurt.wav");
     }
   }
@@ -106,9 +112,6 @@ Game::~Game() {
   }
   if (overlay_texture) {
     SDL_DestroyTexture(overlay_texture);
-  }
-  if (jump_sound) {
-    Mix_FreeChunk(jump_sound);
   }
   if (hurt_sound) {
     Mix_FreeChunk(hurt_sound);
