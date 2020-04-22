@@ -1,8 +1,8 @@
 #include "camera.h"
 
 void Camera::Update(double t) {
-  double target_x = focus_x - camera.w / 2;
-  double target_y = focus_y - camera.h / 2;
+  double target_x = focus.x - camera.w / 2;
+  double target_y = focus.y - camera.h / 2;
   fx += t * (target_x - fx);
   fy += t * (target_y - fy);
 
@@ -32,7 +32,6 @@ SDL_Rect Camera::Transform(const SDL_Rect& rect) const {
   return transformed;
 }
 
-void Camera::Focus(int x, int y) {
-  focus_x = x;
-  focus_y = y;
+void Camera::Focus(IVec pixel_pos) {
+  focus = pixel_pos;
 }

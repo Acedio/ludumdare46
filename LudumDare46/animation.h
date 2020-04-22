@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "camera.h"
+#include "transform.h"
 
 class Animation {
 public:
@@ -16,7 +17,7 @@ public:
   // Returns false if the animation has finished.
   bool Update();
 
-  void Draw(SDL_Renderer* renderer, const Camera& camera, const SDL_Rect& dst) const;
+  void Draw(SDL_Renderer* renderer, const Camera& camera, const Anchor& anchor) const;
   void DrawAngle(SDL_Renderer* renderer, const Camera& camera, const SDL_Rect& dst,
                  double rads) const;
 

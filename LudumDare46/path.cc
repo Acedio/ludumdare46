@@ -3,15 +3,17 @@
 #include <SDL.h>
 
 #include "csvread.h"
+#include "transform.h"
 
 Path Path::LoadFromCSV(CSVRead* reader) {
   Path path;
   int segments = reader->ReadInt();
   for (int i = 0; i < segments; ++i) {
-    Vec p;
-    p.x = reader->ReadInt();
-    p.y = reader->ReadInt();
-    path.points.push_back(p);
+    // The points are in pixel space, store them in game space.
+    IVec pixel_space;
+    pixel_space.x = reader->ReadInt();
+    pixel_space.y = reader->ReadInt();
+    path.points.push_back(ToGameSpace(pixel_space));
   }
 
   path.Reset();

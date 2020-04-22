@@ -165,6 +165,7 @@
     <ClCompile Include="sprite.cc" />
     <ClCompile Include="tilemap.cc" />
     <ClCompile Include="tower.cc" />
+    <ClCompile Include="transform.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="animation.h" />
@@ -183,6 +184,7 @@
     <ClInclude Include="sprite.h" />
     <ClInclude Include="tilemap.h" />
     <ClInclude Include="tower.h" />
+    <ClInclude Include="transform.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="asset_dir\collision.png" />

@@ -3,6 +3,7 @@
 #include <SDL_image.h>
 
 #include "level.h"
+#include "transform.h"
 #include "log.h"
 
 bool Game::Update(SDL_Renderer *renderer, ButtonState buttons, double t) {
@@ -18,8 +19,7 @@ bool Game::Update(SDL_Renderer *renderer, ButtonState buttons, double t) {
   for (auto& tower : towers) {
     tower->Update();
   }
-  SDL_Rect hero_box = ToSDLRect(hero->BoundingBox());
-  camera->Focus(hero_box.x, hero_box.y);
+  camera->Focus(ToPixelSpace(hero->BoundingBox().TopLeft()));
   camera->Update(t);
 
   return true;

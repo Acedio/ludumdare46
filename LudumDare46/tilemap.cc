@@ -4,26 +4,13 @@
 #include <fstream>
 #include <string>
 
+#include "transform.h"
+
 const int kTileRows = 32;
 const int kTileCols = 32;
-const int kTileWidth = 8;
-const int kTileHeight = 8;
 const Tile kEmptyTile = 0;
 
 const double kBuffer = 0.001;
-
-Vec ToPixelSpace(const Vec& pos) {
-  return {pos.x * kTileWidth, pos.y * kTileHeight};
-}
-
-SDL_Rect ToSDLRect(const Rect& rect) {
-  SDL_Rect sr;
-  sr.x = rect.x * kTileWidth;
-  sr.y = rect.y * kTileHeight;
-  sr.w = kTileWidth;
-  sr.h = kTileHeight;
-  return sr;
-}
 
 SDL_Rect TileSet::getTile(Tile tile) const {
   SDL_assert(tile >= 0 && tile < kTileRows*kTileCols);

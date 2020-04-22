@@ -50,12 +50,10 @@ SDL_Rect Animation::getFrame(int row, int col) const {
   return src;
 }
 
-void Animation::Draw(SDL_Renderer* renderer, const Camera& camera, const SDL_Rect& dst) const {
+void Animation::Draw(SDL_Renderer* renderer, const Camera& camera, const Anchor& anchor) const {
   SDL_Rect src = getFrame(frames[frame].row, frames[frame].col);
-  SDL_Rect with_src_bounds = camera.Transform(dst);
-  with_src_bounds.w = src.w;
-  with_src_bounds.h = src.h;
-  SDL_RenderCopy(renderer, tex, &src, &with_src_bounds);
+  SDL_Rect dst = camera.Transform(anchor.PixelSpace(IVec{src.w, src.h}));
+  SDL_RenderCopy(renderer, tex, &src, &dst);
 }
 
 void Animation::DrawAngle(SDL_Renderer* renderer, const Camera& camera, const SDL_Rect& dst, double rads) const {

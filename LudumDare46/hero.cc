@@ -78,8 +78,9 @@ const Animation& Hero::CurrentSprite() const {
 void Hero::Draw(SDL_Renderer* renderer, const Camera& camera) const {
   // The sprite is a unit square that should be bottom aligned and horizontally
   // centered around the bounding_box.
-  SDL_Rect dst = ToSDLRect(bounding_box);
-  SDL_Rect sprite_box{dst.x - (CurrentSprite().width() - dst.w) / 2,
-                  dst.y + dst.h - CurrentSprite().height(), 1, 1};
-  CurrentSprite().Draw(renderer, camera, sprite_box);
+  CurrentSprite().Draw(
+      renderer, camera,
+      Anchor(bounding_box.PointAt(XAlignment::CENTER, YAlignment::BOTTOM),
+             XAlignment::CENTER,
+             YAlignment::BOTTOM));
 }

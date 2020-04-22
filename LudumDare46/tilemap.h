@@ -10,12 +10,9 @@
 #include "camera.h"
 #include "geometry.h"
 
-// TODO: Move these somewhere else.
-SDL_Rect ToSDLRect(const Rect& rect);
-Vec ToPixelSpace(const Vec& pos);
-
 typedef int Tile;
 
+// TODO: Rename this and share this with Animations.
 class TileSet {
  public:
   TileSet(SDL_Texture* tex) : tex(tex) {}

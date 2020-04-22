@@ -30,7 +30,7 @@ private:
   Vec seg_vec;
   double segment_t = 0;
   double segment_total_t = 0;
-  double speed = 16;
+  double speed = 2;
 };
 
 #endif // PATH_H

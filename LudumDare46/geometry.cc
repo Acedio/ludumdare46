@@ -29,6 +29,33 @@ Vec operator*(double s, const Vec& a) {
   return result;
 }
 
+Vec Rect::PointAt(XAlignment x_align, YAlignment y_align) const {
+  Vec p;
+  switch (x_align) { 
+    case XAlignment::LEFT:
+      p.x = x;
+      break;
+    case XAlignment::CENTER:
+      p.x = x + w / 2;
+      break;
+    case XAlignment::RIGHT:
+      p.x = x + w;
+      break;
+  }
+  switch (y_align) { 
+    case YAlignment::TOP:
+      p.y = y;
+      break;
+    case YAlignment::CENTER:
+      p.y = y + h / 2;
+      break;
+    case YAlignment::BOTTOM:
+      p.y = y + h;
+      break;
+  }
+  return p;
+}
+
 bool Intersects(double a1, double a2, double b1, double b2) {
   // NOTE: Collisions are open on the top end, closed on the bottom. [0, 1) does
   // not collide with [1, 2). This way unit squares can be stacked without

@@ -23,15 +23,10 @@ void Monster::Update(double t) {
 }
 
 void Monster::Draw(SDL_Renderer* renderer, const Camera& camera) const {
-  SDL_Rect dst;
   const Animation& animation = current_animation();
-  dst.w = animation.width();
-  dst.h = animation.height();
-  // Center it on the path location.
-  Vec loc = path.Location();
-  dst.x = loc.x - dst.w/2;
-  dst.y = loc.y - dst.h/2;
-  animation.Draw(renderer, camera, dst);
+  animation.Draw(
+      renderer, camera,
+      Anchor(path.Location(), XAlignment::CENTER, YAlignment::BOTTOM));
 }
 
 const Animation& Monster::current_animation() const {

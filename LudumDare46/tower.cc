@@ -17,12 +17,5 @@ void Tower::Draw(SDL_Renderer* renderer, const Camera& camera) const {
   } else {
     animation = idle.get();
   }
-  Vec pixel_space = ToPixelSpace(pos);
-  SDL_Rect dst;
-  dst.w = animation->width();
-  dst.h = animation->height();
-  // Center it on the location.
-  dst.x = pixel_space.x - dst.w/2;
-  dst.y = pixel_space.y - dst.h/2;
-  animation->Draw(renderer, camera, dst);
+  animation->Draw(renderer, camera, Anchor(pos));
 }
