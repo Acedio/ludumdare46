@@ -3,6 +3,7 @@
 
 #include "animation.h"
 #include "geometry.h"
+#include "drawable.h"
 
 class Tower {
  public:
@@ -13,7 +14,7 @@ class Tower {
   }
 
   void Update();
-  void Draw(SDL_Renderer* renderer, const Camera& camera) const;
+  Drawable GetDrawable() const;
 
  private:
   bool creating = true;

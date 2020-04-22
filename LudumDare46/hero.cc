@@ -75,12 +75,12 @@ const Animation& Hero::CurrentSprite() const {
   }
 }
 
-void Hero::Draw(SDL_Renderer* renderer, const Camera& camera) const {
-  // The sprite is a unit square that should be bottom aligned and horizontally
-  // centered around the bounding_box.
-  CurrentSprite().Draw(
-      renderer, camera,
-      Anchor(bounding_box.PointAt(XAlignment::CENTER, YAlignment::BOTTOM),
-             XAlignment::CENTER,
-             YAlignment::BOTTOM));
+Drawable Hero::GetDrawable() const { Drawable drawable; 
+  drawable.animation = &CurrentSprite();
+  Vec anchor_point =
+      bounding_box.PointAt(XAlignment::CENTER, YAlignment::BOTTOM);
+  drawable.anchor =
+      Anchor(anchor_point, XAlignment::CENTER, YAlignment::BOTTOM);
+  drawable.y_sort = anchor_point.y;
+  return drawable;
 }

@@ -3,11 +3,12 @@
 
 #include <SDL.h>
 
+#include "animation.h"
 #include "buttons.h"
 #include "camera.h"
+#include "drawable.h"
 #include "event.h"
 #include "geometry.h"
-#include "animation.h"
 #include "tilemap.h"
 
 enum class Direction {
@@ -21,7 +22,7 @@ class Hero {
  public:
   std::vector<Event> Update(double t, ButtonState buttons,
                             const TileMap& tilemap);
-  void Draw(SDL_Renderer* renderer, const Camera& camera) const;
+  Drawable GetDrawable() const;
 
   Rect BoundingBox() const {
     return bounding_box;

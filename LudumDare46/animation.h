@@ -22,9 +22,6 @@ public:
                  double rads) const;
 
   void SetLoop(bool l);
-
-  int width() const { return w; }
-  int height() const { return h; }
 private:
   Animation() {}
 

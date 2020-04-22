@@ -22,11 +22,12 @@ void Monster::Update(double t) {
   path.Update(t);
 }
 
-void Monster::Draw(SDL_Renderer* renderer, const Camera& camera) const {
-  const Animation& animation = current_animation();
-  animation.Draw(
-      renderer, camera,
-      Anchor(path.Location(), XAlignment::CENTER, YAlignment::BOTTOM));
+Drawable Monster::GetDrawable() const {
+  Drawable drawable;
+  drawable.animation = &current_animation();
+  drawable.anchor = Anchor(path.Location(), XAlignment::CENTER, YAlignment::BOTTOM);
+  drawable.y_sort = path.Location().y;
+  return drawable;
 }
 
 const Animation& Monster::current_animation() const {

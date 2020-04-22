@@ -1,7 +1,5 @@
 #include "tower.h"
 
-#include "tilemap.h"
-
 void Tower::Update() {
   if (creating && !create->Update()) {
     creating = false;
@@ -10,12 +8,14 @@ void Tower::Update() {
   }
 }
 
-void Tower::Draw(SDL_Renderer* renderer, const Camera& camera) const {
-  const Animation* animation;
+Drawable Tower::GetDrawable() const {
+  Drawable drawable;
   if (creating) {
-    animation = create.get();
+    drawable.animation = create.get();
   } else {
-    animation = idle.get();
+    drawable.animation = idle.get();
   }
-  animation->Draw(renderer, camera, Anchor(pos));
+  drawable.anchor = Anchor(pos, XAlignment::CENTER, YAlignment::CENTER);
+  drawable.y_sort = pos.y; // TODO
+  return drawable;
 }

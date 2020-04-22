@@ -1,5 +1,6 @@
 #include "game.h"
 
+#include <algorithm>
 #include <SDL_image.h>
 
 #include "level.h"
@@ -37,13 +38,19 @@ void Game::Draw(SDL_Renderer* renderer) const {
     // SDL_RenderCopy(renderer, overlay_texture, NULL, NULL);
   }
 
+  std::vector<Drawable> drawables;
   for (const auto& monster : monsters) {
-    monster->Draw(renderer, *camera);
+    drawables.push_back(monster->GetDrawable());
   }
   for (const auto& tower : towers) {
-    tower->Draw(renderer, *camera);
+    drawables.push_back(tower->GetDrawable());
   }
-  hero->Draw(renderer, *camera);
+  drawables.push_back(hero->GetDrawable());
+  std::sort(drawables.begin(), drawables.end(), DrawableOrder());
+  for (const auto& drawable : drawables) {
+    drawable.Draw(renderer, *camera);
+  }
+
   particles.Draw(renderer, *camera);
 
   tilemap->DrawForeground(renderer, *camera);

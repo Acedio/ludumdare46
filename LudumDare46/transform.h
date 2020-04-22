@@ -16,7 +16,7 @@ Vec ToGameSpace(const IVec& pos);
 // Fixes a pixel-space texture to a game-space point.
 class Anchor {
  public:
-  Anchor(Vec game_pos, XAlignment x_align = XAlignment::LEFT,
+  Anchor(Vec game_pos = {0, 0}, XAlignment x_align = XAlignment::LEFT,
          YAlignment y_align = YAlignment::TOP)
       : game_pos(game_pos), x_align(x_align), y_align(y_align) {}
 

@@ -6,13 +6,14 @@
 
 #include "animation.h"
 #include "path.h"
+#include "drawable.h"
 
 class Monster {
 public:
   static std::unique_ptr<Monster> LoadFromCSV(
     SDL_Renderer *renderer, const Path& p, const std::string& filename);
   void Update(double t);
-  void Draw(SDL_Renderer* renderer, const Camera& camera) const;
+  Drawable GetDrawable() const;
 
 private:
   const Animation& current_animation() const;

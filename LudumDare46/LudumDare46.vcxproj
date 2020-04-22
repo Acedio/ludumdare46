@@ -154,6 +154,7 @@
     <ClCompile Include="buttons.cc" />
     <ClCompile Include="camera.cc" />
     <ClCompile Include="csvread.cc" />
+    <ClCompile Include="drawable.cc" />
     <ClCompile Include="game.cc" />
     <ClCompile Include="geometry.cc" />
     <ClCompile Include="hero.cc" />
@@ -172,6 +173,7 @@
     <ClInclude Include="buttons.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="csvread.h" />
+    <ClInclude Include="drawable.h" />
     <ClInclude Include="event.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="geometry.h" />
