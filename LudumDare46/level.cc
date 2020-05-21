@@ -29,5 +29,5 @@ std::unique_ptr<Level> LoadLevelFromCSV(SDL_Renderer* renderer, const std::strin
     level->monsters.push_back(Monster::LoadFromCSV(renderer, path_with_delay, monster_file));
   }
 
-  return std::move(level);
+  return level;
 }

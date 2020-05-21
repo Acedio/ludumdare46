@@ -11,7 +11,7 @@ std::unique_ptr<Monster> Monster::LoadFromCSV(
   monster->right = Animation::LoadFromCSV(renderer, reader->ReadString());
   monster->up = Animation::LoadFromCSV(renderer, reader->ReadString());
   monster->down = Animation::LoadFromCSV(renderer, reader->ReadString());
-  return std::move(monster);
+  return monster;
 }
 
 void Monster::Update(double t) {

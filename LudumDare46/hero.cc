@@ -3,7 +3,6 @@
 #include <iostream>
 
 const double kVel = 7.0;
-const double kGravityAcc = 50.0;
 
 std::vector<Event> Hero::Update(double t, ButtonState buttons,
                                 const TileMap& tilemap) {

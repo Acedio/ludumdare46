@@ -43,10 +43,10 @@ class Hero {
   // Tiles/sec
   Vec vel;
 
-  std::unique_ptr<Animation> left;
-  std::unique_ptr<Animation> right;
   std::unique_ptr<Animation> up;
   std::unique_ptr<Animation> down;
+  std::unique_ptr<Animation> left;
+  std::unique_ptr<Animation> right;
 
   Direction dir = Direction::RIGHT;
 };
