@@ -62,16 +62,34 @@ std::vector<Event> Hero::Update(double t, ButtonState buttons,
   return events;
 }
 
+Vec Hero::GetTarget() const {
+  const double kMargin = 1.0;
+  switch (dir) {
+    case Direction::UP:
+      return bounding_box.PointAt(XAlignment::CENTER, YAlignment::TOP) +
+             Vec{0, -kMargin};
+    case Direction::DOWN:
+      return bounding_box.PointAt(XAlignment::CENTER, YAlignment::BOTTOM) +
+             Vec{0, kMargin};
+    case Direction::LEFT:
+      return bounding_box.PointAt(XAlignment::LEFT, YAlignment::CENTER) +
+             Vec{-kMargin, 0};
+    case Direction::RIGHT:
+      return bounding_box.PointAt(XAlignment::RIGHT, YAlignment::CENTER) +
+             Vec{kMargin, 0};
+  }
+}
+
 const Animation& Hero::CurrentSprite() const {
   switch (dir) {
-  case Direction::UP:
-    return *up;
-  case Direction::DOWN:
-    return *down;
-  case Direction::LEFT:
-    return *left;
-  case Direction::RIGHT:
-    return *right;
+    case Direction::UP:
+      return *up;
+    case Direction::DOWN:
+      return *down;
+    case Direction::LEFT:
+      return *left;
+    case Direction::RIGHT:
+      return *right;
   }
 }
 

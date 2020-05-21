@@ -27,6 +27,7 @@ class Hero {
   Rect BoundingBox() const {
     return bounding_box;
   }
+  Vec GetTarget() const;
   const Animation& CurrentSprite() const;
 
   Hero(SDL_Renderer* renderer, Vec pos)
